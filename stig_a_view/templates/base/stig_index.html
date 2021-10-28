@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}STIG Index{% endblock %}
+
+{% block content %}
+<h2>STIGs</h2>
+  <table class="table">
+  <thead>
+  <tr>
+    <th>Product</th>
+    <th>STIG</th>
+    <th>Release Date</th>
+  </tr>
+  </thead>
+  <tbody>
+    {% for stig in stigs %}
+      <tr>
+        <td>{{ stig.product.name }}</td>
+        <td><a href="{% url "stig_detail" stig.id %}">V{{ stig.version }}R{{ stig.release }}</a></td>
+        <td>{{ stig.release_date }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+  </table>
+
+{% endblock content %}

@@ -3,15 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{% block title %}stig_a_view{% endblock title %}</title>
+    <title>{% block title %}STIG-A-View{% endblock title %} - STIG-A-View</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Online STIG viewer">
     <meta name="author" content="Matthew Burket">
-
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <![endif]-->
 
     <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}">
 
@@ -48,16 +43,12 @@
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="{% url 'home' %}">stig_a_view</a>
+        <a class="navbar-brand" href="{% url 'home' %}">STIG-A-View</a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'about' %}">About</a>
-            </li>
+              <a class="nav-link" href="{% url 'stigs' %}">Home <span class="sr-only">(current)</span></a>
             {% if request.user.is_authenticated %}
               <li class="nav-item">
                 {# URL provided by django-allauth/account/urls.py #}
@@ -94,7 +85,11 @@
       {% block content %}
         <p>Use this document as a way to quick start any new project.</p>
       {% endblock content %}
-
+    <div class="footer">
+      <hr/>
+      This website is not created by, run, approved, or endorsed by the U.S. Department of Defense.
+      Use at your own risk.
+    </div>
     </div> <!-- /container -->
 
     {% block modal %}{% endblock modal %}

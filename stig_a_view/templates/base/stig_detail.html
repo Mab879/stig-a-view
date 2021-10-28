@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ stig.short_version }}{% endblock %}
+
+{% block content %}
+  <h1>{{ stig.product.name }} STIG {{ stig.short_version }}</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>STIG ID</th>
+        <th>CCI</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for control in controls %}
+          <tr>
+            <td><a href="{%   url "control_detail" control.id %}">{{ control.disa_stig_id }}</a></td>
+            <td>{{ control.cci.cci_id  }}</td>
+            <td>{{ control.title }}</td>
+          </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

@@ -10,7 +10,7 @@ Online STIG viewer
      :target: https://github.com/ambv/black
      :alt: Black code style
 
-:License: GPLv3
+:License: AGPLv3
 
 Settings
 --------

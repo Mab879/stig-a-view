@@ -5,6 +5,8 @@ from django.urls import include, path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
 
+from stig_a_view.base import views as base_views
+
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
     path(
@@ -15,7 +17,10 @@ urlpatterns = [
     # User management
     path("users/", include("stig_a_view.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
-    # Your stuff: custom urls includes go here
+    path("stigs/", view=base_views.StigIndex.as_view(), name="stigs"),
+    path("stigs/<int:id>", view=base_views.StigDetail.as_view(), name="stig_detail"),
+    path("controls/<int:id>", view=base_views.ControlView.as_view(), name="control_detail"),
+    path("controls/<str:id>", view=base_views.ControlView.as_view(), name="control_detail_stig_id")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
