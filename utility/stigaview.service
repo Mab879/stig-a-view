@@ -1,0 +1,19 @@
+# https://docs.gunicorn.org/en/stable/deploy.html
+[Unit]
+Description=STIG-A-View App Server
+Requires=stigaview.socket
+After=network.target
+
+[Service]
+Type=notify
+User=stigaview
+Group=stigaview
+WorkingDirectory=/opt/stigaview/stig-a-view
+ExecStart=/opt/stigaview/stig-a-view/venv/bin/gunicorn config.wsgi
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
