@@ -19,8 +19,10 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     path("stigs/", view=base_views.StigIndex.as_view(), name="stigs"),
     path("stigs/<int:id>", view=base_views.StigDetail.as_view(), name="stig_detail"),
-    path("controls/<int:id>", view=base_views.ControlView.as_view(), name="control_detail"),
-    path("controls/<str:id>", view=base_views.ControlView.as_view(), name="control_detail_stig_id")
+    path("stigs/<int:stig_id>/controls/<int:id>", view=base_views.ControlView.as_view(), name="control_detail"),
+    path("stigs/<int:stig_id>/controls/<str:id>", view=base_views.ControlView.as_view(), name="control_detail_stig_id"),
+    path("products/<int:id>", view=base_views.ProductView.as_view(), name="product_detail"),
+    path("products/<str:id>", view=base_views.ProductView.as_view(), name="product_detail")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

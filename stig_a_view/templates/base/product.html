@@ -1,13 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}STIG Index{% endblock %}
+{% block title %}{{ product.name }}{% endblock %}
 
 {% block content %}
-<h2>STIGs</h2>
+  <h2>{{ product.name }}</h2>
   <table class="table">
   <thead>
   <tr>
-    <th>Product</th>
     <th>STIG</th>
     <th>Release Date</th>
   </tr>
@@ -15,12 +14,10 @@
   <tbody>
     {% for stig in stigs %}
       <tr>
-        <td><a href="{% url "product_detail" stig.product.short_name %}">{{ stig.product.name }}</a></td>
         <td><a href="{% url "stig_detail" stig.id %}">V{{ stig.version }}R{{ stig.release }}</a></td>
         <td>{{ stig.release_date }}</td>
       </tr>
     {% endfor %}
   </tbody>
   </table>
-
-{% endblock content %}
+{% endblock%}
