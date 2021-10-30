@@ -11,11 +11,7 @@ from django.urls import reverse
 from stig_a_view.users.forms import UserChangeForm
 from stig_a_view.users.models import User
 from stig_a_view.users.tests.factories import UserFactory
-from stig_a_view.users.views import (
-    UserRedirectView,
-    UserUpdateView,
-    user_detail_view,
-)
+from stig_a_view.users.views import UserRedirectView, UserUpdateView, user_detail_view
 
 pytestmark = pytest.mark.django_db
 

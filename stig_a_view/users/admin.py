@@ -5,8 +5,6 @@ from django.utils.translation import gettext_lazy as _
 
 from stig_a_view.users.forms import UserChangeForm, UserCreationForm
 
-from stig_a_view.base import models as base_models
-
 User = get_user_model()
 
 

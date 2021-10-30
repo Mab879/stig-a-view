@@ -26,7 +26,7 @@ class StigDetail(TemplateView):
 class ControlView(TemplateView):
     template_name = 'base/control_detail.html'
 
-    def get_context_data(self, **kwargs: object) -> dict[str, object]:
+    def get_context_data(self, **kwargs: object) -> dict:
         context = super().get_context_data(**kwargs)
         if type(context['id']) == int:
             context['control'] = base_models.Control.objects.filter(id=context['id']).first()

@@ -1,8 +1,8 @@
 import datetime
+import urllib.request
+import xml.etree.ElementTree as ET
 import zipfile
 from io import BytesIO
-import xml.etree.ElementTree as ET
-import urllib.request
 from urllib.parse import urlparse
 
 import stig_a_view.base.models as base_models
@@ -44,7 +44,8 @@ def import_stig(url: str, short_product_name: str, release_date: datetime.date) 
             stig_id = stig_xml.find('xccdf-1.1:version', NS).text
             srg, _ = base_models.Srg.objects.update_or_create(srg_id=group.find('xccdf-1.1:title', NS).text)
             description = "<root>"
-            description += stig_xml.find('xccdf-1.1:description', NS).text.replace('&lt;', '<').replace('&gt;', '>').replace('&', '&amp;')
+            description += stig_xml.find('xccdf-1.1:description', NS).text.replace('&lt;', '<').replace('&gt;', '>')\
+                .replace('&', '&amp;')
             description += "</root>"
             description_root = ET.ElementTree(ET.fromstring(description)).getroot()
             description = disa_text_to_html(description_root.find('VulnDiscussion').text)
@@ -54,15 +55,15 @@ def import_stig(url: str, short_product_name: str, release_date: datetime.date) 
             cci, _ = base_models.Cci.objects.update_or_create(cci_id=cci_from_source)
             base_models.Control.objects.update_or_create(disa_stig_id=stig_id,
                                                          defaults={'srg': srg,
-                                                                   'description':description,
+                                                                   'description': description,
                                                                    'severity': base_models.SEVERITY[
                                                                        stig_xml.attrib['severity']],
                                                                    'title': stig_xml.find('xccdf-1.1:title', NS).text,
                                                                    'fix': fix,
                                                                    'check_content': check,
-                                                                   'vulnerability_id': group.attrib['id'].removeprefix('V-'),
+                                                                   'vulnerability_id': group.attrib['id']
+                                                                                    .removeprefix('V-'),
                                                                    'cci': cci,
                                                                    'stig': stig,
                                                                    })
     return False
-
