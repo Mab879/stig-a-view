@@ -62,7 +62,7 @@ def import_stig(url: str, short_product_name: str, release_date: datetime.date) 
                                                                    'fix': fix,
                                                                    'check_content': check,
                                                                    'vulnerability_id': group.attrib['id']
-                                                                                    .removeprefix('V-'),
+                                                                                    .replace('V-', ''),
                                                                    'cci': cci,
                                                                    'stig': stig,
                                                                    })
