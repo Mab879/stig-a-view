@@ -7,7 +7,8 @@
   <p>
   <b>STIG ID:</b> {{ control.disa_stig_id }} &nbsp;|&nbsp;
   <b>CCI: </b>{{ control.cci.cci_id }}&nbsp;|&nbsp;
-  <b>SRG: </b>{{ control.srg.srg_id }}
+  <b>SRG: </b>{{ control.srg.srg_id }} |
+  <b>Severity: </b>{{ control.get_severity_display }}
   </p>
   <div class="container-fluid">
    <div class="row">
