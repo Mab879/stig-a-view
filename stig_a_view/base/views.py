@@ -30,7 +30,8 @@ class ControlView(TemplateView):
     def get_context_data(self, **kwargs: object) -> dict:
         context = super().get_context_data(**kwargs)
         if type(context['id']) == int:
-            context['control'] = base_models.Control.objects.filter(id=context['id']).first()
+            context['control'] = base_models.Control.objects.filter(stig_id=context['stig_id'],
+                                                                    id=context['id']).first()
         elif type(context['id']) == str:
             context['control'] = base_models.Control.objects.filter(stig_id=context['stig_id'],
                                                                     disa_stig_id=context['id']).first()
