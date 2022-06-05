@@ -20,8 +20,6 @@ flake8:
 pytest:
   stage: test
   image: python:3.9
-  tags:
-    - python
   services:
     - postgres:13.2
   variables:

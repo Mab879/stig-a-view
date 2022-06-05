@@ -3,5 +3,35 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.9 (stig_a_view)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.10 (stig-a-view)" project-jdk-type="Python SDK" />
+  <component name="UnattendedHostPersistenceState">
+    <option name="openedFilesInfos">
+      <list>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="0" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/stig_a_view/templates/base/product.html" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="309" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/stig_a_view/templates/base/stig_detail.html" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="951" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/stig_a_view/base/models.py" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="396" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/config/settings/local.py" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="613" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/config/urls.py" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="3630" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/stig_a_view/base/actions.py" />
+        </OpenedFileInfo>
+      </list>
+    </option>
+  </component>
 </project>
