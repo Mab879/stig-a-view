@@ -53,7 +53,7 @@ def import_stig(url: str, short_product_name: str, release_date: datetime.date) 
             check = disa_text_to_html(stig_xml.find('xccdf-1.1:check/xccdf-1.1:check-content', NS).text)
             cci_from_source = stig_xml.find("xccdf-1.1:ident[@system='http://cyber.mil/cci']", NS).text
             cci, _ = base_models.Cci.objects.update_or_create(cci_id=cci_from_source)
-            base_models.Control.objects.update_or_create(disa_stig_id=stig_id, stig=stig
+            base_models.Control.objects.update_or_create(disa_stig_id=stig_id, stig=stig,
                                                          defaults={'srg': srg,
                                                                    'description': description,
                                                                    'severity': base_models.SEVERITY[
