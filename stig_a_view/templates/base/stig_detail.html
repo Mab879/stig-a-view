@@ -15,7 +15,7 @@
     <tbody>
         {% for control in controls %}
           <tr>
-            <td><a href="{%   url "control_detail" stig.id control.id %}">{{ control.disa_stig_id }}</a></td>
+            <td><a href="{% url "control_detail" stig.id control.disa_stig_id %}">{{ control.disa_stig_id }}</a></td>
             <td>{{ control.cci.cci_id  }}</td>
             <td>{{ control.title }}</td>
           </tr>
