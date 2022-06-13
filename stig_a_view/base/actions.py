@@ -24,6 +24,8 @@ def temp_rhel8():
 
 def import_stig(url: str, short_product_name: str, release_date: datetime.date) -> bool:
     url_parts = urlparse(url).path.split('_')
+    version = url_parts[3][1]
+    release = url_parts[3][3]
 
     zip_file_raw = urllib.request.urlopen(url).read()
     zip_data = BytesIO()
@@ -34,20 +36,28 @@ def import_stig(url: str, short_product_name: str, release_date: datetime.date) 
         f'{folder}_Manual_STIG/U_{url_parts[1]}_{url_parts[2]}_STIG_{url_parts[3]}_Manual-xccdf.xml')
     tree = ET.ElementTree(ET.fromstringlist(stig_file.readlines()))
     root = tree.getroot()
+    process_stig_xml(short_product_name, version, release, release_date, root)
+    return True
+
+
+def import_stig_xml(url: str, short_product_name: str, release_date: datetime.date, version: str, release: str) -> bool:
+    stig_xml = urllib.request.urlopen(url).read()
+    root = ET.ElementTree(ET.fromstringlist(stig_xml.readlines())).getroot()
+    process_stig_xml(short_product_name, version, release, release_date, root)
+    return True
+
+
+def process_stig_xml(short_product_name: str, version: str, release: str, release_date: datetime.date, root: ET.Element):
     product = base_models.Product.objects.filter(short_name=short_product_name).first()
-    stig, _ = base_models.Stig.objects.update_or_create(product=product, version=url_parts[3][1],
-                                                        release=url_parts[3][3],
+    stig, _ = base_models.Stig.objects.update_or_create(product=product, version=version,
+                                                        release=release,
                                                         defaults={'release_date': release_date})
     stig.save()
     for group in root.findall('xccdf-1.1:Group', NS):
         for stig_xml in group.findall('xccdf-1.1:Rule', NS):
             stig_id = stig_xml.find('xccdf-1.1:version', NS).text
             srg, _ = base_models.Srg.objects.update_or_create(srg_id=group.find('xccdf-1.1:title', NS).text)
-            description = "<root>"
-            description += stig_xml.find('xccdf-1.1:description', NS).text.replace('&lt;', '<').replace('&gt;', '>')\
-                .replace('&', '&amp;')
-            description += "</root>"
-            description_root = ET.ElementTree(ET.fromstring(description)).getroot()
+            description_root = get_description_root(stig_xml)
             description = disa_text_to_html(description_root.find('VulnDiscussion').text)
             fix = disa_text_to_html(stig_xml.find('xccdf-1.1:fixtext', NS).text)
             check = disa_text_to_html(stig_xml.find('xccdf-1.1:check/xccdf-1.1:check-content', NS).text)
@@ -62,7 +72,15 @@ def import_stig(url: str, short_product_name: str, release_date: datetime.date) 
                                                                    'fix': fix,
                                                                    'check_content': check,
                                                                    'vulnerability_id': group.attrib['id']
-                                                                                    .replace('V-', ''),
+                                                         .replace('V-', ''),
                                                                    'cci': cci,
                                                                    })
-    return False
+
+
+def get_description_root(stig_xml):
+    description = "<root>"
+    description += stig_xml.find('xccdf-1.1:description', NS).text.replace('&lt;', '<').replace('&gt;', '>') \
+        .replace('&', '&amp;')
+    description += "</root>"
+    description_root = ET.ElementTree(ET.fromstring(description)).getroot()
+    return description_root
