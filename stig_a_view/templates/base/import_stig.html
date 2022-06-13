@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Import STIG{% endblock %}
+
+{% block content %}
+  <h2>Import STIG</h2>
+  <form action="{% url 'import_stig_view' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_ul }}
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}

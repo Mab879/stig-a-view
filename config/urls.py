@@ -22,7 +22,8 @@ urlpatterns = [
     path("stigs/<int:stig_id>/controls/<int:id>", view=base_views.ControlView.as_view(), name="control_detail"),
     path("stigs/<int:stig_id>/controls/<str:id>", view=base_views.ControlView.as_view(), name="control_detail"),
     path("products/<int:id>", view=base_views.ProductView.as_view(), name="product_detail"),
-    path("products/<str:id>", view=base_views.ProductView.as_view(), name="product_detail")
+    path("products/<str:id>", view=base_views.ProductView.as_view(), name="product_detail"),
+    path("import/url", view=base_views.ImportStigView.as_view(), name="import_stig_view")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
