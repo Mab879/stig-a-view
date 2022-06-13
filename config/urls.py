@@ -22,7 +22,16 @@ urlpatterns = [
     path("stigs/<int:stig_id>/controls/<int:id>", view=base_views.ControlView.as_view(), name="control_detail"),
     path("stigs/<int:stig_id>/controls/<str:id>", view=base_views.ControlView.as_view(), name="control_detail"),
     path("products/<int:id>", view=base_views.ProductView.as_view(), name="product_detail"),
-    path("products/<str:id>", view=base_views.ProductView.as_view(), name="product_detail")
+    path("products/<str:id>", view=base_views.ProductView.as_view(), name="product_detail"),
+    path("products/<str:product>/<int:id>/", view=base_views.StigDetail.as_view(), name="stig_detail"),
+    path("products/<str:product>/v<int:version>r<int:release>/", view=base_views.StigDetail.as_view(), name="stig_detail"),
+    path("stigs/<int:id>/", view=base_views.StigDetail.as_view(), name="stig_detail"),
+    path("stigs/<int:stig_id>/controls/<int:id>/", view=base_views.ControlView.as_view(), name="control_detail"),
+    path("stigs/<int:stig_id>/controls/<str:id>/", view=base_views.ControlView.as_view(), name="control_detail"),
+    path("products/<str:product>/v<int:version>r<int:release>/<str:id>/", view=base_views.ControlView.as_view(),
+         name="control_detail_product"),
+    path("products/<int:id>/", view=base_views.ProductView.as_view(), name="product_detail"),
+    path("products/<str:id>/", view=base_views.ProductView.as_view(), name="product_detail"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
