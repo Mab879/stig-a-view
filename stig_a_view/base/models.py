@@ -28,6 +28,7 @@ class Stig(models.Model):
 
 class Srg(models.Model):
     srg_id = models.CharField(max_length=50, unique=True)
+    title = models.CharField(max_length=1024, default="")
 
     def __str__(self) -> str:
         return self.srg_id
