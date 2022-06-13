@@ -8,6 +8,9 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     short_name = models.CharField(max_length=10)
 
+    def __str__(self) -> str:
+        return self.short_name
+
 
 class Stig(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -19,13 +22,22 @@ class Stig(models.Model):
     def short_version(self):
         return f'V{self.version}R{self.release}'
 
+    def __str__(self) -> str:
+        return f'<Stig {self.product} v{self.version}r{self.release}>'
+
 
 class Srg(models.Model):
     srg_id = models.CharField(max_length=50, unique=True)
 
+    def __str__(self) -> str:
+        return self.srg_id
+
 
 class Cci(models.Model):
     cci_id = models.CharField(max_length=50, unique=True)
+
+    def __str__(self) -> str:
+        return self.cci_id
 
 
 class Control(models.Model):
@@ -46,3 +58,6 @@ class Control(models.Model):
     fix_text = models.TextField()
     fix = models.TextField()
     check_content = models.TextField()
+
+    def __str__(self) -> str:
+        return self.disa_stig_id
