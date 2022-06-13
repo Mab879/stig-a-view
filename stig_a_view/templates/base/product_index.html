@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Products Index{% endblock %}
+
+{% block content %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Short Name</th>
+      </tr>
+    </thead>
+  <tbody>
+  {% for product in products %}
+    <tr>
+      <td><a href="{% url "product_detail" product.short_name %}">{{ product.name }}</a></td>
+      <td>{{ product.short_name }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+  </table>
+{% endblock %}

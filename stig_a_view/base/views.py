@@ -63,3 +63,12 @@ class ProductView(TemplateView):
         context['stigs'] = base_models.Stig.objects.filter(product=product).all()
         context['product'] = product
         return context
+
+
+class ProductIndex(TemplateView):
+    template_name = 'base/product_index.html'
+
+    def get_context_data(self, **kwargs: object) -> dict:
+        context = super().get_context_data(**kwargs)
+        context['products'] = base_models.Product.objects.order_by('short_name').all()
+        return context
