@@ -14,7 +14,7 @@
     <tbody>
     {% for srg in srgs %}
       <tr>
-        <td>{{ srg.srg_id }}</td>
+        <td><a href="{% url 'srg_detail' srg.srg_id %}">{{ srg.srg_id }}</a> </td>
       <td>{{ srg.title }}</td>
       </tr>
     {% endfor %}

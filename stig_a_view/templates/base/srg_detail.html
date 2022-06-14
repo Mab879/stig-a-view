@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}{{ srg.srg_id }} Rules{% endblock %}
+
+{% block content %}
+  <h2>{{ srg.srg_id }} Controls</h2>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>STIG ID</th>
+      <th>Title</th>
+      <th>Product</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for control in controls %}
+      <tr>
+        <td>{{ control.disa_stig_id }}</td>
+        <td>{{ control.title }}</td>
+        <td>{{ control.stig.product.name }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

@@ -111,3 +111,13 @@ class SrgIndex(TemplateView):
         context = super().get_context_data(**kwargs)
         context['srgs'] = base_models.Srg.objects.order_by('srg_id').all()
         return context
+
+
+class SrgDetail(TemplateView):
+    template_name = 'base/srg_detail.html'
+
+    def get_context_data(self, **kwargs: object) -> dict:
+        context = super().get_context_data(**kwargs)
+        context['controls'] = base_models.Control.objects.filter(srg__srg_id__iexact=context['srg_id'])\
+            .order_by("stig__product__short_name", 'disa_stig_id').select_related('stig__product').all()
+        return context
