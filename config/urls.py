@@ -23,9 +23,7 @@ urlpatterns = [
     path("stigs/<int:stig_id>/controls/<str:id>", view=base_views.ControlView.as_view(), name="control_detail"),
     path("products/<int:id>", view=base_views.ProductView.as_view(), name="product_detail"),
     path("products/<str:id>", view=base_views.ProductView.as_view(), name="product_detail"),
-<<<<<<< HEAD
     path("import/url", view=base_views.ImportStigView.as_view(), name="import_stig_view")
-=======
     path("products/<str:product>/<int:id>/", view=base_views.StigDetail.as_view(), name="stig_detail"),
     path("products/<str:product>/v<int:version>r<int:release>/", view=base_views.StigDetail.as_view(), name="stig_detail"),
     path("stigs/<int:id>/", view=base_views.StigDetail.as_view(), name="stig_detail"),
@@ -36,7 +34,6 @@ urlpatterns = [
     path("products/<int:id>/", view=base_views.ProductView.as_view(), name="product_detail"),
     path("products/<str:id>/", view=base_views.ProductView.as_view(), name="product_detail"),
     path("products/", view=base_views.ProductIndex.as_view(), name="product_index"),
->>>>>>> urls_rewrite
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
