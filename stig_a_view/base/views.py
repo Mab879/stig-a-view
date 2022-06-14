@@ -102,3 +102,12 @@ class ProductIndex(TemplateView):
         context = super().get_context_data(**kwargs)
         context['products'] = base_models.Product.objects.order_by('short_name').all()
         return context
+
+
+class SrgIndex(TemplateView):
+    template_name = 'base/srg_index.html'
+
+    def get_context_data(self, **kwargs: object) -> dict:
+        context = super().get_context_data(**kwargs)
+        context['srgs'] = base_models.Srg.objects.order_by('srg_id').all()
+        return context

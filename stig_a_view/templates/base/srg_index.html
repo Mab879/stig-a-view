@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+  <h2>Security Requirements Guide IDs (SRGID)</h2>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>SRGID</th>
+      <th>Title</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for srg in srgs %}
+      <tr>
+        <td>{{ srg.srg_id }}</td>
+      <td>{{ srg.title }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
