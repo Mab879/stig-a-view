@@ -15,7 +15,8 @@ class StigIndex(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['stigs'] = base_models.Stig.objects.select_related("product").all()
+        context['stigs'] = base_models.Stig.objects.select_related("product").order_by('release_date',
+                                                                                       'product__short_name')
         return context
 
 
@@ -24,9 +25,15 @@ class StigDetail(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        stig = base_models.Stig.objects.filter(id=context['id']).first()
+        if 'id' in context:
+            stig = base_models.Stig.objects.filter(id=context['id']).first()
+        elif 'version' in context and 'release' in context and 'product' in context:
+            stig = base_models.Stig.objects.filter(product__short_name__iexact=context['product'],
+                                                   release=context['release'], version=context['version']).first()
+        else:
+            return context
         context['stig'] = stig
-        context['controls'] = base_models.Control.objects.filter(stig_id=stig.id).select_related('cci')\
+        context['controls'] = base_models.Control.objects.filter(stig_id=stig.id).select_related('cci').select_related('stig').select_related('stig__product') \
             .order_by('disa_stig_id').all()
         return context
 
@@ -36,12 +43,18 @@ class ControlView(TemplateView):
 
     def get_context_data(self, **kwargs: object) -> dict:
         context = super().get_context_data(**kwargs)
-        if type(context['id']) == int:
+        if 'version' in context and 'release' in context and 'product' in context:
+            stig = base_models.Stig.objects.filter(version=context['version'], release=context['release'],
+                                                   product__short_name__iexact=context['product']).first()
+            context['control'] = base_models.Control.objects.filter(disa_stig_id=context['id'], stig=stig).first()
+        elif type(context['id']) == int:
             context['control'] = base_models.Control.objects.filter(stig_id=context['stig_id'],
                                                                     id=context['id']).first()
         elif type(context['id']) == str:
             context['control'] = base_models.Control.objects.filter(stig_id=context['stig_id'],
                                                                     disa_stig_id=context['id']).first()
+        else:
+            pass
         return context
 
 
@@ -80,3 +93,12 @@ class ImportStigView(LoginRequiredMixin, TemplateView):
             return HttpResponseRedirect('/')
         else:
             return HttpResponseRedirect('/?import_failed')
+
+
+class ProductIndex(TemplateView):
+    template_name = 'base/product_index.html'
+
+    def get_context_data(self, **kwargs: object) -> dict:
+        context = super().get_context_data(**kwargs)
+        context['products'] = base_models.Product.objects.order_by('short_name').all()
+        return context
