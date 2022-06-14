@@ -84,3 +84,15 @@ def get_description_root(stig_xml):
     description += "</root>"
     description_root = ET.ElementTree(ET.fromstring(description)).getroot()
     return description_root
+
+
+def update_srg_title(url: str):
+    with urllib.request.urlopen(url) as response:
+        srg_xml = str(response.read(), 'utf-8')
+        root = ET.ElementTree(ET.fromstring(srg_xml)).getroot()
+        for group in root.findall('xccdf-1.1:Group', NS):
+            for srg in group.findall('xccdf-1.1:Rule', NS):
+                srg_id = srg.find('xccdf-1.1:version', NS).text
+                title = srg.find('xccdf-1.1:title', NS).text
+                base_models.Srg.objects.update_or_create(srg_id=srg_id, defaults={'title': title})
+
