@@ -1,6 +1,13 @@
-from django.views.generic.base import TemplateView
+import urllib.request
+import xml.etree.ElementTree as ET
 
+from django.http import HttpResponseRedirect
+from django.views.generic.base import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from stig_a_view.base import actions as base_actions
 from stig_a_view.base import models as base_models
+from stig_a_view.base import forms as base_forms
 
 
 class StigIndex(TemplateView):
@@ -50,3 +57,26 @@ class ProductView(TemplateView):
         context['stigs'] = base_models.Stig.objects.filter(product=product).all()
         context['product'] = product
         return context
+
+
+class ImportStigView(LoginRequiredMixin, TemplateView):
+    template_name = 'base/import_stig.html'
+
+    def get_context_data(self, **kwargs: object) -> dict:
+        context = super().get_context_data(**kwargs)
+        form = base_forms.ImportStigUrlForm()
+        context['form'] = form
+        return context
+
+    def post(self, request):
+        form = base_forms.ImportStigUrlForm(request.POST)
+        if form.is_valid():
+            with urllib.request.urlopen(form.cleaned_data['url']) as response:
+                stig_xml = str(response.read(), 'utf-8')
+                root = ET.ElementTree(ET.fromstring(stig_xml)).getroot()
+                base_actions.process_stig_xml(form.cleaned_data['product'].short_name, form.cleaned_data['version'],
+                                              form.cleaned_data['release'], form.cleaned_data['release_date'],
+                                              root)
+            return HttpResponseRedirect('/')
+        else:
+            return HttpResponseRedirect('/?import_failed')
