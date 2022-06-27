@@ -67,7 +67,7 @@ class ProductView(TemplateView):
             product = base_models.Product.objects.filter(id=context['id']).first()
         else:
             product = base_models.Product.objects.filter(short_name=context['id']).first()
-        context['stigs'] = base_models.Stig.objects.filter(product=product).all()
+        context['stigs'] = base_models.Stig.objects.filter(product=product).order_by('release_date', 'short_name').all()
         context['product'] = product
         return context
 
