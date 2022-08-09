@@ -122,3 +122,12 @@ class SrgDetail(TemplateView):
             .order_by("stig__product__short_name", "stig__version", "stig__release", 'disa_stig_id')\
             .select_related('stig__product').all()
         return context
+
+
+class ProductsIndex(TemplateView):
+    template_name = 'base/product_index.html'
+
+    def get_context_data(self, **kwargs: object) -> dict:
+        context = super().get_context_data(**kwargs)
+        context['products'] = base_models.Product.objects.order_by('short_name').all()
+        return context
