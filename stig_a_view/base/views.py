@@ -1,13 +1,13 @@
 import urllib.request
 import xml.etree.ElementTree as ET
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.views.generic.base import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 from stig_a_view.base import actions as base_actions
-from stig_a_view.base import models as base_models
 from stig_a_view.base import forms as base_forms
+from stig_a_view.base import models as base_models
 
 
 class StigIndex(TemplateView):
@@ -33,7 +33,8 @@ class StigDetail(TemplateView):
         else:
             return context
         context['stig'] = stig
-        context['controls'] = base_models.Control.objects.filter(stig_id=stig.id).select_related('cci').select_related('stig').select_related('stig__product') \
+        context['controls'] = base_models.Control.objects.filter(stig_id=stig.id)\
+            .select_related('cci').select_related('stig').select_related('stig__product') \
             .order_by('disa_stig_id').all()
         return context
 

@@ -47,7 +47,8 @@ def import_stig_xml(url: str, short_product_name: str, release_date: datetime.da
     return True
 
 
-def process_stig_xml(short_product_name: str, version: str, release: str, release_date: datetime.date, root: ET.Element):
+def process_stig_xml(short_product_name: str, version: str, release: str, release_date: datetime.date,
+                     root: ET.Element):
     product = base_models.Product.objects.filter(short_name=short_product_name).first()
     stig, _ = base_models.Stig.objects.update_or_create(product=product, version=version,
                                                         release=release,
@@ -71,8 +72,8 @@ def process_stig_xml(short_product_name: str, version: str, release: str, releas
                                                                    'title': stig_xml.find('xccdf-1.1:title', NS).text,
                                                                    'fix': fix,
                                                                    'check_content': check,
-                                                                   'vulnerability_id': group.attrib['id']
-                                                         .replace('V-', ''),
+                                                                   'vulnerability_id':
+                                                                       group.attrib['id'].replace('V-', ''),
                                                                    'cci': cci,
                                                                    })
 
@@ -95,4 +96,3 @@ def update_srg_title(url: str):
                 srg_id = srg.find('xccdf-1.1:version', NS).text
                 title = srg.find('xccdf-1.1:title', NS).text
                 base_models.Srg.objects.update_or_create(srg_id=srg_id, defaults={'title': title})
-
