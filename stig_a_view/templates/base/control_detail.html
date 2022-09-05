@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "min_base.html" %}
 
 {% block title %}{{ control.title }}{% endblock %}
 
@@ -12,15 +12,15 @@
   </p>
   <div class="container-fluid">
    <div class="row">
-     <div class="col-lg">
+     <div class="span1">
        <h3>Vulnerability Discussion</h3>
        {{ control.description | safe }}
      </div>
-     <div class="col-lg">
+     <div class="span1">
        <h3>Check</h3>
        {{ control.check_content | safe }}
      </div>
-     <div class="col-lg">
+     <div class="span1">
        <h3>Fix</h3>
        {{ control.fix | safe }}
      </div>
