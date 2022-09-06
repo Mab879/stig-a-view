@@ -62,7 +62,8 @@ th, td {
 
 @media (min-width: 1024px) {
   .span1 {
-    width: 33%;
+    width: 32.5%;
+    margin: 0.05%;
     display: inline-block;
     vertical-align: top;
   }
