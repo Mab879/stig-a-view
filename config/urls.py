@@ -21,7 +21,8 @@ urlpatterns = [
     path("stigs/<int:id>", view=base_views.StigDetail.as_view(), name="stig_detail"),
     path("stigs/<int:stig_id>/controls/<int:id>", view=base_views.ControlView.as_view(), name="control_detail"),
     path("stigs/<int:stig_id>/controls/<str:id>", view=base_views.ControlView.as_view(), name="control_detail"),
-    path("prodcuts/", view=base_views.ProductIndex.as_view(), name="products"),
+    path("products/", view=base_views.ProductIndex.as_view(), name="products"),
+    path("prodcuts/", view=base_views.ProductIndex.as_view()),  # Leaving this as not remove old urls
     path("products/<int:id>", view=base_views.ProductView.as_view(), name="product_detail"),
     path("products/<str:id>", view=base_views.ProductView.as_view(), name="product_detail"),
     path("import/url", view=base_views.ImportStigView.as_view(), name="import_stig_view"),
