@@ -18,6 +18,8 @@ flake8:
     - flake8
 
 pytest:
+  tags:
+     - docker
   stage: test
   image: python:3.9
   services:
