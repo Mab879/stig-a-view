@@ -25,6 +25,8 @@ class StigDetail(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        if 'onepage' in context['view'].request.GET:
+            self.template_name = 'base/stig_detail_onepage.html'
         if 'id' in context:
             stig = base_models.Stig.objects.filter(id=context['id']).first()
         elif 'version' in context and 'release' in context and 'product' in context:
@@ -34,7 +36,7 @@ class StigDetail(TemplateView):
             return context
         context['stig'] = stig
         context['controls'] = base_models.Control.objects.filter(stig_id=stig.id)\
-            .select_related('cci').select_related('stig').select_related('stig__product') \
+            .select_related('cci').select_related('stig').select_related('stig__product').select_related('srg') \
             .order_by('disa_stig_id').all()
         return context
 
