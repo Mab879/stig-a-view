@@ -4,6 +4,8 @@
 
 {% block content %}
   <h1>{{ stig.product.name }} STIG {{ stig.short_version }}</h1>
+  <a href="{% url 'stig_detail' product=stig.product version=stig.version release=stig.release %}?onepage">
+    View as one page</a>
   <table class="table">
     <thead>
       <tr>
