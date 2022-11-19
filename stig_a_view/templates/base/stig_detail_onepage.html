@@ -5,8 +5,8 @@
 {% block content %}
   <h1>{{ stig.product.name }} STIG {{ stig.short_version }}</h1>
   <a href="{% url 'stig_detail' product=stig.product version=stig.version release=stig.release %}">View as table</a>
-  <hr/>
   {% for control in controls %}
+    <hr/>
     <h2>{{ control.title }}</h2>
     <p>
       <b>STIG ID:</b>
@@ -30,7 +30,6 @@
           {{ control.fix | safe }}
         </div>
       </div>
-      <hr/>
     </div>
   {% endfor %}
 {% endblock %}
