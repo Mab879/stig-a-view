@@ -16,7 +16,7 @@
     {% for stig in stigs %}
       <tr>
         <td><a href="{% url "product_detail" stig.product.short_name %}">{{ stig.product.name }}</a></td>
-        <td><a href="{% url "stig_detail" stig.id %}">V{{ stig.version }}R{{ stig.release }}</a></td>
+        <td><a href="{% url "stig_detail" product=stig.product.short_name version=stig.version release=stig.release %}">V{{ stig.version }}R{{ stig.release }}</a></td>
         <td>{{ stig.release_date }}</td>
       </tr>
     {% endfor %}
