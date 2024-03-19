@@ -1,6 +1,8 @@
 stig_a_view
 ===========
 
+This repe is no longer active. See `stigaview-static <https://github.com/stigaview/stigaview-static>`_
+
 Online STIG viewer
 
 .. image:: https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter
